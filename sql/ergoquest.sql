@@ -37,6 +37,7 @@ CREATE TABLE PositionPresets (
 );
 
 CREATE TABLE TimeIntervals (
+    ID SERIAL PRIMARY KEY,
     presetsID integer REFERENCES Presets(ID),
     timeInSec integer,
     orderNumber integer
@@ -70,13 +71,18 @@ INSERT INTO Presets(name, userID) VALUES ('work mode', 2);
 INSERT INTO Presets(name, userID) VALUES ('reading mode', 2);
 INSERT INTO Presets(name, userID) VALUES ('laid back', 3);
 INSERT INTO Presets(name, userID) VALUES ('watching video', 3);
-INSERT INTO Presets(name, userID) VALUES ('laid back', 1);
-INSERT INTO Presets(name, userID) VALUES ('working', 1);
-
-INSERT INTO PositionPresets(presetsID, positionID) VALUES (1, 2);
+INSERT INTO Presets(name, userID) VALUES ('laid back', 1);INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(1,)
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (1, 3);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (1, 5);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 4);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 1);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 3);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 2);
+
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(1,1);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(2,2);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(3,3);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(4,1);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(5,2);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(6,1);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(7,2);
