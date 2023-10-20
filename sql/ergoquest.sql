@@ -7,32 +7,39 @@ DROP TABLE IF EXISTS PositionPresets;
 
 -- Schema
 CREATE TABLE User (
-                      ID SERIAL PRIMARY KEY,
-                      email varchar(50) NOT NULL,
-                      name varchar(50),
-                      password varchar(50) NOT NULL
+    ID SERIAL PRIMARY KEY,
+    email varchar(50) NOT NULL,
+    name varchar(50),
+    password varchar(50) NOT NULL
 );
 
 CREATE TABLE Motor(
-                        ID SERIAL PRIMARY KEY,
-                        name varchar(50)
+    ID SERIAL PRIMARY KEY,
+    name varchar(50)
 );
 
 CREATE TABLE MotorPosition(
     ID SERIAL PRIMARY KEY,
     angle integer,
-    motorID integer REFERENCES Motor(ID)
+    motorID integer REFERENCES Motor(ID),
+    userID integer REFERENCES User(ID)
 );
 
 CREATE TABLE Presets (      
-                            ID SERIAL PRIMARY KEY,
-                            name varchar(50),
-                            userID integer REFERENCES User(ID)
+    ID SERIAL PRIMARY KEY,
+    name varchar(50),
+    userID integer REFERENCES User(ID)
 );
 
 CREATE TABLE PositionPresets (
     presetsID integer REFERENCES Presets(ID),
     positionID integer REFERENCES MotorPosition(ID)
+);
+
+CREATE TABLE TimeIntervals (
+    presetsID integer REFERENCES Presets(ID),
+    timeInSec integer,
+    orderNumber integer
 );
 
 --Makes so users can see tables
