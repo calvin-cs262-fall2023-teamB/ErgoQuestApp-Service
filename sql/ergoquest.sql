@@ -1,12 +1,13 @@
 -- Checks if table already exists
-DROP TABLE IF EXISTS User;
+DROP TABLE IF EXISTS DBUser;
 DROP TABLE IF EXISTS Motor;
 DROP TABLE IF EXISTS MotorPosition;
 DROP TABLE IF EXISTS Presets;
 DROP TABLE IF EXISTS PositionPresets;
+DROP TABLE IF EXISTS TimeIntervals;
 
 -- Schema
-CREATE TABLE User (
+CREATE TABLE DBUser (
     ID SERIAL PRIMARY KEY,
     email varchar(50) NOT NULL,
     name varchar(50),
@@ -28,7 +29,7 @@ CREATE TABLE MotorPosition(
 CREATE TABLE Presets (      
     ID SERIAL PRIMARY KEY,
     name varchar(50),
-    userID integer REFERENCES User(ID)
+    DBUserID integer REFERENCES DBUser(ID)
 );
 
 CREATE TABLE PositionPresets (
@@ -43,16 +44,17 @@ CREATE TABLE TimeIntervals (
     orderNumber integer
 );
 
---Makes so users can see tables
-GRANT SELECT ON User TO PUBLIC;
+--Makes so DBUsers can see tables
+GRANT SELECT ON DBUser TO PUBLIC;
 GRANT SELECT ON Motor TO PUBLIC;
 GRANT SELECT ON MotorPosition TO PUBLIC;
 GRANT SELECT ON Presets TO PUBLIC;
 GRANT SELECT ON PositionPresets TO PUBLIC;
+GRANT SELECT ON TimeIntervals TO PUBLIC;
 
-INSERT INTO User(email, password) VALUES ('zkg3@calvin.edu', 'abcdef');
-INSERT INTO User(email, name, password) VALUES ('harry@gmail.com', 'Harry Smith', '1234ae');
-INSERT INTO User(email, name, password) VALUES ('emily@gmail.com', 'Emily Dickenson', 'writer@');
+INSERT INTO DBUser(email, password) VALUES ('zkg3@calvin.edu', 'abcdef');
+INSERT INTO DBUser(email, name, password) VALUES ('harry@gmail.com', 'Harry Smith', '1234ae');
+INSERT INTO DBUser(email, name, password) VALUES ('emily@gmail.com', 'Emily Dickenson', 'writer@');
 
 INSERT INTO Motor(name) VALUES ('knee');
 INSERT INTO Motor(name) VALUES ('ankle');
@@ -66,12 +68,15 @@ INSERT INTO MotorPosition(angle, motorID) VALUES (100, 3);
 INSERT INTO MotorPosition(angle, motorID) VALUES (75, 2);
 INSERT INTO MotorPosition(angle, motorID) VALUES (120, 5);
 
-INSERT INTO Presets(name, userID) VALUES ('laid back', 2);
-INSERT INTO Presets(name, userID) VALUES ('work mode', 2);
-INSERT INTO Presets(name, userID) VALUES ('reading mode', 2);
-INSERT INTO Presets(name, userID) VALUES ('laid back', 3);
-INSERT INTO Presets(name, userID) VALUES ('watching video', 3);
-INSERT INTO Presets(name, userID) VALUES ('laid back', 1);INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(1,)
+INSERT INTO Presets(name, DBUserID) VALUES ('laid back', 2);
+INSERT INTO Presets(name, DBUserID) VALUES ('work mode', 2);
+INSERT INTO Presets(name, DBUserID) VALUES ('reading mode', 2);
+INSERT INTO Presets(name, DBUserID) VALUES ('laid back', 3);
+INSERT INTO Presets(name, DBUserID) VALUES ('watching video', 3);
+INSERT INTO Presets(name, DBUserID) VALUES ('laid back', 1);
+INSERT INTO Presets(name, DBUserID) VALUES ('working', 1);
+
+INSERT INTO PositionPresets(presetsID, positionID) VALUES (1, 2);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (1, 3);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (1, 5);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 4);
