@@ -4,35 +4,44 @@ DROP TABLE IF EXISTS Motor;
 DROP TABLE IF EXISTS MotorPosition;
 DROP TABLE IF EXISTS Presets;
 DROP TABLE IF EXISTS PositionPresets;
+DROP TABLE IF EXISTS TimeIntervals;
 
 -- Schema
 CREATE TABLE DBUser (
-                      ID SERIAL PRIMARY KEY,
-                      email varchar(50) NOT NULL,
-                      name varchar(50),
-                      password varchar(50) NOT NULL
+    ID SERIAL PRIMARY KEY,
+    email varchar(50) NOT NULL,
+    name varchar(50),
+    password varchar(50) NOT NULL
 );
 
 CREATE TABLE Motor(
-                        ID SERIAL PRIMARY KEY,
-                        name varchar(50)
+    ID SERIAL PRIMARY KEY,
+    name varchar(50)
 );
 
 CREATE TABLE MotorPosition(
     ID SERIAL PRIMARY KEY,
     angle integer,
-    motorID integer REFERENCES Motor(ID)
+    motorID integer REFERENCES Motor(ID),
+    userID integer REFERENCES User(ID)
 );
 
 CREATE TABLE Presets (      
-                            ID SERIAL PRIMARY KEY,
-                            name varchar(50),
-                            DBUserID integer REFERENCES DBUser(ID)
+    ID SERIAL PRIMARY KEY,
+    name varchar(50),
+    DBUserID integer REFERENCES DBUser(ID)
 );
 
 CREATE TABLE PositionPresets (
     presetsID integer REFERENCES Presets(ID),
     positionID integer REFERENCES MotorPosition(ID)
+);
+
+CREATE TABLE TimeIntervals (
+    ID SERIAL PRIMARY KEY,
+    presetsID integer REFERENCES Presets(ID),
+    timeInSec integer,
+    orderNumber integer
 );
 
 --Makes so DBUsers can see tables
@@ -41,6 +50,7 @@ GRANT SELECT ON Motor TO PUBLIC;
 GRANT SELECT ON MotorPosition TO PUBLIC;
 GRANT SELECT ON Presets TO PUBLIC;
 GRANT SELECT ON PositionPresets TO PUBLIC;
+GRANT SELECT ON TimeIntervals TO PUBLIC;
 
 INSERT INTO DBUser(email, password) VALUES ('zkg3@calvin.edu', 'abcdef');
 INSERT INTO DBUser(email, name, password) VALUES ('harry@gmail.com', 'Harry Smith', '1234ae');
@@ -73,3 +83,11 @@ INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 4);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 1);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 3);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 2);
+
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(1,1);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(2,2);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(3,3);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(4,1);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(5,2);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(6,1);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(7,2);
