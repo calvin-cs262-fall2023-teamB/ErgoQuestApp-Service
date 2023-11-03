@@ -30,6 +30,24 @@ router.put("/motors/:id", updateMotor);
 router.post('/motors', createMotor);
 router.delete('/motors/:id', deleteMotor);
 
+router.get("/motorpositions", readMotorPosition);
+router.get("/motorpositions/:id", readMotorPosition);
+router.put("/motorpositions/:id", updateMotorPosition);
+router.post('/motorpositions', createMotorPosition);
+router.delete('/motorpositions/:id', deleteMotorPosition);
+
+router.get("/presets", readPresets);
+router.get("/presets/:id", readPresets);
+router.put("/presets/:id", updatePresets);
+router.post('/presets', createPresets);
+router.delete('/presets/:id', deletePresets);
+
+router.get("/positionpresets", readPositionPresets);
+router.get("/positionpresets/:presetsID/:positionID", readPositionPresets);
+router.put("/positionpresets/:presetsID/:positionID", updatePositionPresets);
+router.post('/positionpresets/:presetsID/:positionID', createPositionPresets);
+router.delete('/positionpresets/:presetsID/:positionID', deletePositionPresets);
+
 app.use(router);
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
@@ -147,8 +165,8 @@ function deleteMotor(req, res, next) {
         });
 }
 
-function readMotor(req, res, next) {
-    db.many("SELECT * FROM Motor")
+function readMotorPosition(req, res, next) {
+    db.many("SELECT * FROM MotorPosition")
         .then(data => {
             res.send(data);
         })
@@ -157,8 +175,8 @@ function readMotor(req, res, next) {
         })
 }
 
-function readMotor(req, res, next) {
-    db.oneOrNone('SELECT * FROM Motor WHERE ID=${id}', req.params)
+function readMotorPosition(req, res, next) {
+    db.oneOrNone('SELECT * FROM MotorPosition WHERE ID=${id}', req.params)
         .then(data => {
             returnDataOr404(res, data);
         })
@@ -167,8 +185,8 @@ function readMotor(req, res, next) {
         });
 }
 
-function updateMotor(req, res, next) {
-    db.oneOrNone('UPDATE Motor SET name=${body.name} WHERE ID=${params.id} RETURNING id', req)
+function updateMotorPosition(req, res, next) {
+    db.oneOrNone('UPDATE MotorPosition SET angle=${body.angle}, motorID=${body.motorID} WHERE ID=${params.id} RETURNING id', req)
         .then(data => {
             returnDataOr404(res, data);
         })
@@ -178,7 +196,7 @@ function updateMotor(req, res, next) {
 }
 
 function createMotorPosition(req, res, next) {
-    db.one('INSERT INTO Motor(name) VALUES (${name}) RETURNING id', req.body)
+    db.one('INSERT INTO MotorPosition(angle, motorID) VALUES (${angle}, ${motorID}) RETURNING id', req.body)
         .then(data => {
             res.send(data);
         })
@@ -188,7 +206,107 @@ function createMotorPosition(req, res, next) {
 }
 
 function deleteMotorPosition(req, res, next) {
-    db.oneOrNone('DELETE FROM Motor WHERE ID=${id} RETURNING id', req.params)
+    db.oneOrNone('DELETE FROM MotorPosition WHERE ID=${id} RETURNING id', req.params)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function readPresets(req, res, next) {
+    db.many("SELECT * FROM Presets")
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            next(err);
+        })
+}
+
+function readPresets(req, res, next) {
+    db.oneOrNone('SELECT * FROM Presets WHERE ID=${id}', req.params)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function updatePresets(req, res, next) {
+    db.oneOrNone('UPDATE Presets SET name=${body.name}, DBUserID=${body.DBUserID} WHERE ID=${params.id} RETURNING id', req)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function createPresets(req, res, next) {
+    db.one('INSERT INTO Presets(name, DBUserID) VALUES (${name}, ${DBUserID}) RETURNING id', req.body)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function deletePresets(req, res, next) {
+    db.oneOrNone('DELETE FROM Presets WHERE ID=${id} RETURNING id', req.params)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function readPositionPresets(req, res, next) {
+    db.many("SELECT * FROM PositionPresets")
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            next(err);
+        })
+}
+
+function readPositionPresets(req, res, next) {
+    db.oneOrNone('SELECT * FROM PositionPresets WHERE presetsID=${presetsID} AND positionID=${positionID}', req.params)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function updatePositionPresets(req, res, next) {
+    db.oneOrNone('UPDATE PositionPresets SET presetsID=${presetsID}, positionID=${positionID}', req)
+        .then(data => {
+            returnDataOr404(res, data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function createPositionPresets(req, res, next) {
+    db.one('INSERT INTO PositionPresets(presetsID, positionID) VALUES (${presetsID}, ${positionID})', req.body)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            next(err);
+        });
+}
+
+function deletePositionPresets(req, res, next) {
+    db.oneOrNone('DELETE FROM PositionPresets WHERE presetsID=${presetsID} AND positionID=${positionID}', req.params)
         .then(data => {
             returnDataOr404(res, data);
         })
