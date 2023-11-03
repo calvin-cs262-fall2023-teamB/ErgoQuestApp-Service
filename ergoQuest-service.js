@@ -2,11 +2,11 @@
 
 const pgp = require('pg-promise')();
 const db = pgp({
-    host: hansken.db.elephantsql.com,
-    port: azure-arm::centralus,
-    database: sukcdfrs,
-    user: sukcdfrs,
-    password: Q2_8xUF9SLpXeZOJDGB82hBt0BIXYVJY
+    host: 'hansken.db.elephantsql.com',
+    port: 5432,
+    database: 'sukcdfrs',
+    user: 'sukcdfrs',
+    password: 'Q2_8xUF9SLpXeZOJDGB82hBt0BIXYVJY'
 });
 
 // Configure the server and its routes.
