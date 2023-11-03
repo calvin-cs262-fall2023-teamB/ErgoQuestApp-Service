@@ -1,0 +1,6 @@
+{
+    "name": "Ergo Quest Service Application",
+    "description": "Data-based webservice for ErgoQuestApp",
+    "repository": "https://github.com/calvin-cs262-fall2023-teamB/ErgoQuestApp-Service",
+    "image": "heroku/nodejs"
+  }

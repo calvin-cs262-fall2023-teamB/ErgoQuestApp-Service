@@ -2,11 +2,11 @@
 
 const pgp = require('pg-promise')();
 const db = pgp({
-    host: hansken.db.elephantsql.com,
-    port: azure-arm::centralus,
-    database: sukcdfrs,
-    user: sukcdfrs,
-    password: Q2_8xUF9SLpXeZOJDGB82hBt0BIXYVJY
+    host: 'hansken.db.elephantsql.com',
+    port: 5432,
+    database: 'sukcdfrs',
+    user: 'sukcdfrs',
+    password: 'Q2_8xUF9SLpXeZOJDGB82hBt0BIXYVJY'
 });
 
 // Configure the server and its routes.
@@ -19,31 +19,31 @@ router.use(express.json());
 
 router.get("/", readHelloMessage);
 router.get("/users", readUsers);
-router.get("/users/:id", readUsers);
+router.get("/users/:id", readUser);
 router.put("/users/:id", updateUser);
 router.post('/users', createUser);
 router.delete('/users/:id', deleteUser);
 
-router.get("/motors", readMotor);
+router.get("/motors", readMotors);
 router.get("/motors/:id", readMotor);
 router.put("/motors/:id", updateMotor);
 router.post('/motors', createMotor);
 router.delete('/motors/:id', deleteMotor);
 
-router.get("/motorpositions", readMotorPosition);
+router.get("/motorpositions", readMotorPositions);
 router.get("/motorpositions/:id", readMotorPosition);
 router.put("/motorpositions/:id", updateMotorPosition);
 router.post('/motorpositions', createMotorPosition);
 router.delete('/motorpositions/:id', deleteMotorPosition);
 
 router.get("/presets", readPresets);
-router.get("/presets/:id", readPresets);
+router.get("/presets/:id", readPreset);
 router.put("/presets/:id", updatePresets);
 router.post('/presets', createPresets);
 router.delete('/presets/:id', deletePresets);
 
 router.get("/positionpresets", readPositionPresets);
-router.get("/positionpresets/:presetsID/:positionID", readPositionPresets);
+router.get("/positionpresets/:presetsID/:positionID", readPositionPreset);
 router.put("/positionpresets/:presetsID/:positionID", updatePositionPresets);
 router.post('/positionpresets/:presetsID/:positionID', createPositionPresets);
 router.delete('/positionpresets/:presetsID/:positionID', deletePositionPresets);
@@ -75,7 +75,7 @@ function readUsers(req, res, next) {
         })
 }
 
-function readUsers(req, res, next) {
+function readUser(req, res, next) {
     db.oneOrNone('SELECT * FROM DBUser WHERE ID=${id}', req.params)
         .then(data => {
             returnDataOr404(res, data);
@@ -115,7 +115,7 @@ function deleteUser(req, res, next) {
         });
 }
 
-function readMotor(req, res, next) {
+function readMotors(req, res, next) {
     db.many("SELECT * FROM Motor")
         .then(data => {
             res.send(data);
@@ -165,7 +165,7 @@ function deleteMotor(req, res, next) {
         });
 }
 
-function readMotorPosition(req, res, next) {
+function readMotorPositions(req, res, next) {
     db.many("SELECT * FROM MotorPosition")
         .then(data => {
             res.send(data);
@@ -225,7 +225,7 @@ function readPresets(req, res, next) {
         })
 }
 
-function readPresets(req, res, next) {
+function readPreset(req, res, next) {
     db.oneOrNone('SELECT * FROM Presets WHERE ID=${id}', req.params)
         .then(data => {
             returnDataOr404(res, data);
@@ -275,7 +275,7 @@ function readPositionPresets(req, res, next) {
         })
 }
 
-function readPositionPresets(req, res, next) {
+function readPositionPreset(req, res, next) {
     db.oneOrNone('SELECT * FROM PositionPresets WHERE presetsID=${presetsID} AND positionID=${positionID}', req.params)
         .then(data => {
             returnDataOr404(res, data);
