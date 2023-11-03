@@ -1,0 +1,19 @@
+{
+    "name": "cs262-ergoquest-webservice",
+    "version": "1.0.0",
+    "description": "Ergo Quest Webservice",
+    "main": "ergoQuest-service.js",
+    "author": "hgoldkuhle",
+    "license": "ISC",
+    "engines": {
+        "node": "19.x"
+    },
+    "scripts": {
+        "start": "node ergoQuest-service.js",
+        "start-direct": "node ergoQuest-service.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "pg-promise": "^10.15.4"
+    }
+}
