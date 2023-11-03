@@ -2,11 +2,11 @@
 
 const pgp = require('pg-promise')();
 const db = pgp({
-    host: 'hansken.db.elephantsql.com',
-    port: 5432,
-    database: 'sukcdfrs',
-    user: 'sukcdfrs',
-    password: 'Q2_8xUF9SLpXeZOJDGB82hBt0BIXYVJY'
+    host: process.env.DB_SERVER,
+    port: process.env.DB_PORT,
+    database: process.env.DB_USER,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD
 });
 
 // Configure the server and its routes.
