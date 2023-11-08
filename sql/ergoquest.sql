@@ -45,6 +45,7 @@ GRANT SELECT ON PositionPresets TO PUBLIC;
 INSERT INTO DBUser(email, password) VALUES ('zkg3@calvin.edu', 'abcdef');
 INSERT INTO DBUser(email, name, password) VALUES ('harry@gmail.com', 'Harry Smith', '1234ae');
 INSERT INTO DBUser(email, name, password) VALUES ('emily@gmail.com', 'Emily Dickenson', 'writer@');
+INSERT INTO DBUser(email, name, password) VALUES ('moaningcamel@gmail.com', 'Marko Bulto', 'basketballer20');
 
 INSERT INTO Motor(name) VALUES ('knee');
 INSERT INTO Motor(name) VALUES ('ankle');
