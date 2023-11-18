@@ -10,10 +10,15 @@
     },
     "scripts": {
         "start": "node ergoQuest-service.js",
-        "start-direct": "node ergoQuest-service.js"
+        "start-direct": "node ergoQuest-service.js",
+        "lint": "eslint ."
     },
     "dependencies": {
         "express": "^4.17.1",
         "pg-promise": "^10.15.4"
+    },
+    "devDependencies": {
+        "eslint": "^8.54.0",
+        "eslint-plugin-react": "^7.33.2"
     }
 }
