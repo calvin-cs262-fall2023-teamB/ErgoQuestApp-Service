@@ -9,10 +9,6 @@ const db = pgp({
     password: 'Q2_8xUF9SLpXeZOJDGB82hBt0BIXYVJY'
 });
 
-//Hashing
-const bcrypt = require('bcrypt');
-const saltRounds = 5;
-
 // Configure the server and its routes.
 
 const express = require('express');
@@ -23,7 +19,7 @@ router.use(express.json());
 
 router.get("/", readHelloMessage);
 router.get("/users", readUsers);
-router.get("/users/:id", loginUser);
+router.get("/users/:id", readUser);
 router.put("/users/:id", updateUser);
 router.post('/users', createUser);
 router.delete('/users/:id', deleteUser);
@@ -100,52 +96,11 @@ function updateUser(req, res, next) {
 }
 
 function createUser(req, res, next) {
-    const { email, name, password } = req.body;
-
-    bcrypt.hash(password, saltRounds, function(err, hash) {
-        if (err) {
-            console.error('Error hashing password:', err);
-            res.status(500).send("Error hashing password");
-            return;
-        }
-        db.one('INSERT INTO DBUser(email, name, password) VALUES ($1, $2, $3) RETURNING id', [email, name, hash])
-            .then(data => {
-                res.send(data);
-            })
-            .catch(err => {
-                next(err);
-            });
-    });
-}
-
-function loginUser(req, res, next) {
-    const { email, password } = req.body;
-
-    db.oneOrNone('SELECT * FROM DBUser WHERE email=$1', [email])
-        .then(user => {
-            if (user) {
-                bcrypt.compare(password, user.password, function(err, result) {
-                    if (err) {
-                        console.error('Error comparing password:', err);
-                        res.status(500).send("Internal server error");
-                        return;
-                    }
-                    
-                    if (result) {
-                        // Passwords match
-                        // Here, handle the successful login (e.g., generating a token, redirecting, etc.)
-                        res.send({ message: "Login successful", userID: user.id });
-                    } else {
-                        // Passwords don't match
-                        res.status(401).send("Invalid credentials");
-                    }
-                });
-            } else {
-                res.status(404).send("User not found");
-            }
+    db.one('INSERT INTO DBUser(email, name, password) VALUES (${email}, ${name}, ${password}) RETURNING id', req.body)
+        .then(data => {
+            res.send(data);
         })
         .catch(err => {
-            console.error('Database error:', err);
             next(err);
         });
 }
