@@ -23,7 +23,7 @@ router.use(express.json());
 
 router.get("/", readHelloMessage);
 router.get("/users", readUsers);
-router.get("/users/:id", readUser);
+router.get("/users/:id", loginUser);
 router.put("/users/:id", updateUser);
 router.post('/users', createUser);
 router.delete('/users/:id', deleteUser);
