@@ -1,10 +1,10 @@
 -- Checks if table already exists
-DROP TABLE IF EXISTS DBUser;
-DROP TABLE IF EXISTS Motor;
-DROP TABLE IF EXISTS MotorPosition;
-DROP TABLE IF EXISTS Presets;
-DROP TABLE IF EXISTS PositionPresets;
 DROP TABLE IF EXISTS TimeIntervals;
+DROP TABLE IF EXISTS PositionPresets;
+DROP TABLE IF EXISTS Presets;
+DROP TABLE IF EXISTS MotorPosition;
+DROP TABLE IF EXISTS Motor;
+DROP TABLE IF EXISTS DBUser;
 
 -- Schema
 CREATE TABLE DBUser (
@@ -84,10 +84,10 @@ INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 1);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 3);
 INSERT INTO PositionPresets(presetsID, positionID) VALUES (2, 2);
 
-INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(1,1);
-INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(2,2);
-INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(3,3);
-INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(4,1);
-INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(5,2);
-INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(6,1);
-INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(7,2);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(1,50,1);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(2,120,2);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(3,240,3);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(4,60,1);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(5,70,2);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(6,90,1);
+INSERT INTO TimeIntervals(presetsID, timeInSec, orderNumber) VALUES(7,100,2);
