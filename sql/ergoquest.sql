@@ -23,7 +23,7 @@ CREATE TABLE MotorPosition(
     ID SERIAL PRIMARY KEY,
     angle integer,
     motorID integer REFERENCES Motor(ID),
-    userID integer REFERENCES User(ID)
+    userID integer REFERENCES DBUser(ID)
 );
 
 CREATE TABLE Presets (      
