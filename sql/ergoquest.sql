@@ -9,14 +9,14 @@ DROP TABLE IF EXISTS TimeIntervals;
 -- Schema
 CREATE TABLE DBUser (
     ID SERIAL PRIMARY KEY,
-    email varchar(50) NOT NULL,
-    name varchar(50),
-    password varchar(50) NOT NULL
+    email varchar(64) NOT NULL,
+    name varchar(64),
+    password varchar(128) NOT NULL
 );
 
 CREATE TABLE Motor(
     ID SERIAL PRIMARY KEY,
-    name varchar(50)
+    name varchar(64)
 );
 
 CREATE TABLE MotorPosition(
