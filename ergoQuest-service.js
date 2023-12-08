@@ -186,7 +186,7 @@ function readMotorPosition(req, res, next) {
 }
 
 function updateMotorPosition(req, res, next) {
-    db.oneOrNone('UPDATE MotorPosition SET angle=${body.angle}, motorID=${body.motorID} WHERE ID=${params.id} RETURNING id', req)
+    db.oneOrNone('UPDATE MotorPosition SET angle=${body.angle}, motorID=${body.motorID}, userID=${body.userID} WHERE ID=${params.id} RETURNING id', req)
         .then(data => {
             returnDataOr404(res, data);
         })
@@ -196,7 +196,7 @@ function updateMotorPosition(req, res, next) {
 }
 
 function createMotorPosition(req, res, next) {
-    db.one('INSERT INTO MotorPosition(angle, motorID) VALUES (${angle}, ${motorID}) RETURNING id', req.body)
+    db.one('INSERT INTO MotorPosition(angle, motorID, userID) VALUES (${angle}, ${motorID}, ${userID}) RETURNING id', req.body)
         .then(data => {
             res.send(data);
         })
