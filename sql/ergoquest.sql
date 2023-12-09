@@ -23,7 +23,8 @@ CREATE TABLE MotorPosition(
     ID SERIAL PRIMARY KEY,
     angle integer,
     motorID integer REFERENCES Motor(ID),
-    userID integer REFERENCES DBUser(ID)
+    userID integer REFERENCES DBUser(ID),
+    globalID integer
 );
 
 CREATE TABLE Presets (      
@@ -62,11 +63,11 @@ INSERT INTO Motor(name) VALUES ('upper back');
 INSERT INTO Motor(name) VALUES ('lower back');
 INSERT INTO Motor(name) VALUES ('head');
 
-INSERT INTO MotorPosition(angle, motorID) VALUES (45, 1);
-INSERT INTO MotorPosition(angle, motorID) VALUES (180, 4);
-INSERT INTO MotorPosition(angle, motorID) VALUES (100, 3);
-INSERT INTO MotorPosition(angle, motorID) VALUES (75, 2);
-INSERT INTO MotorPosition(angle, motorID) VALUES (120, 5);
+INSERT INTO MotorPosition(angle, motorID) VALUES (45, 1,2);
+INSERT INTO MotorPosition(angle, motorID) VALUES (180, 4,3);
+INSERT INTO MotorPosition(angle, motorID) VALUES (100, 3,4);
+INSERT INTO MotorPosition(angle, motorID) VALUES (75, 2,5);
+INSERT INTO MotorPosition(angle, motorID) VALUES (120, 5,6);
 
 INSERT INTO Presets(name, DBUserID) VALUES ('laid back', 2);
 INSERT INTO Presets(name, DBUserID) VALUES ('work mode', 2);
