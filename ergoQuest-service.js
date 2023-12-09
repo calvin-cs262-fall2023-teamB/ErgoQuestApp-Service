@@ -31,10 +31,10 @@ router.post('/motors', createMotor);
 router.delete('/motors/:id', deleteMotor);
 
 router.get("/motorpositions", readMotorPositions);
-router.get("/motorpositions/:id", readMotorPosition);
-router.put("/motorpositions/:id", updateMotorPosition);
+router.get("/motorpositions/:motorID/:userID", readMotorPosition);
+router.put("/motorpositions/:motorID/:userID", updateMotorPosition);
 router.post('/motorpositions', createMotorPosition);
-router.delete('/motorpositions/:id', deleteMotorPosition);
+router.delete('/motorpositions/:motorID/:userID', deleteMotorPosition);
 
 router.get("/presets", readPresets);
 router.get("/presets/:id", readPreset);
@@ -176,7 +176,7 @@ function readMotorPositions(req, res, next) {
 }
 
 function readMotorPosition(req, res, next) {
-    db.oneOrNone('SELECT * FROM MotorPosition WHERE ID=${id}', req.params)
+    db.oneOrNone('SELECT * FROM MotorPosition WHERE motorID=${motorID} AND userID=${userID}', req.params)
         .then(data => {
             returnDataOr404(res, data);
         })
@@ -186,7 +186,7 @@ function readMotorPosition(req, res, next) {
 }
 
 function updateMotorPosition(req, res, next) {
-    db.oneOrNone('UPDATE MotorPosition SET angle=${body.angle}, motorID=${body.motorID}, userID=${body.userID} WHERE ID=${params.id} RETURNING id', req)
+    db.oneOrNone('UPDATE MotorPosition SET angle=${body.angle}, motorID=${body.motorID}, userID=${body.userID} WHERE motorID=${body.motorID} AND userID=${body.userID} RETURNING id', req)
         .then(data => {
             returnDataOr404(res, data);
         })
@@ -206,7 +206,7 @@ function createMotorPosition(req, res, next) {
 }
 
 function deleteMotorPosition(req, res, next) {
-    db.oneOrNone('DELETE FROM MotorPosition WHERE ID=${id} RETURNING id', req.params)
+    db.oneOrNone('DELETE FROM MotorPosition WHERE motorID=${motorID} AND userID=${userID} RETURNING id', req.params)
         .then(data => {
             returnDataOr404(res, data);
         })
