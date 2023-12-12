@@ -1,3 +1,28 @@
+/* eslint-disable no-template-curly-in-string */
+/* eslint-disable no-console */
+/* eslint-disable no-use-before-define */
+/**
+ * This module implements a REST-inspired webservice for the Ergo Quest App DB.
+ * The database is hosted on ElephantSQL.
+ *
+ * The service supports the users, motors, motorpositions and presets tables.
+ *
+ * To guard against SQL injection attacks, this code uses pg-promise's built-in
+ * variable escaping. This prevents a client from issuing this URL:
+ *     https://cs262-webservice.azurewebsites.net//players/1%3BDELETE%20FROM%20PlayerGame%3BDELETE%20FROM%20Player
+ * which would delete records in the PlayerGame and then the Player tables.
+ * In particular, we don't use JS template strings because it doesn't filter
+ * client-supplied values properly.
+ *
+ * This service assumes that the database connection strings and the server mode are
+ * set in environment variables. See the DB_* variables used by pg-promise. And
+ * setting NODE_ENV to production will cause ExpressJS to serve up uninformative
+ * server error responses for all errors.
+ *
+ * @author: Henry Goldkuhle
+ * @date: Winter, 2023
+ */
+
 // Set up the database connection.
 
 const pgp = require('pg-promise')();
