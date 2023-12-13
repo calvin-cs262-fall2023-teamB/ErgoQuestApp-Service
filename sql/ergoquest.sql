@@ -1,8 +1,8 @@
 -- Checks if table already exists
 DROP TABLE IF EXISTS TimeIntervals;
 DROP TABLE IF EXISTS PositionPresets;
-DROP TABLE IF EXISTS Presets;
 DROP TABLE IF EXISTS MotorPosition;
+DROP TABLE IF EXISTS Presets;
 DROP TABLE IF EXISTS Motor;
 DROP TABLE IF EXISTS DBUser;
 
@@ -19,17 +19,18 @@ CREATE TABLE Motor(
     name varchar(64)
 );
 
-CREATE TABLE MotorPosition(
-    ID SERIAL PRIMARY KEY,
-    angle integer,
-    motorID integer REFERENCES Motor(ID),
-    userID integer REFERENCES DBUser(ID)
-);
-
 CREATE TABLE Presets (      
     ID SERIAL PRIMARY KEY,
     name varchar(50),
     DBUserID integer REFERENCES DBUser(ID)
+);
+
+CREATE TABLE MotorPosition(
+    ID SERIAL PRIMARY KEY,
+    angle integer,
+    motorID integer REFERENCES Motor(ID),
+    userID integer REFERENCES DBUser(ID),
+    presetID integer REFERENCES Presets(ID)
 );
 
 CREATE TABLE PositionPresets (
