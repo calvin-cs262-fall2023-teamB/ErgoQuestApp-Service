@@ -57,7 +57,7 @@ router.delete('/motors/:id', deleteMotor);
 
 router.get("/motorpositions", readMotorPositions);
 router.get("/motorpositions/:motorID/:userID", readMotorPosition);
-router.put("/motorpositions/:motorID/:userID", updateMotorPosition);
+router.put("/motorpositions/:motorID/:userID/:presetID", updateMotorPosition);
 router.post('/motorpositions', createMotorPosition);
 router.delete('/motorpositions/:motorID/:userID', deleteMotorPosition);
 
@@ -201,7 +201,7 @@ function readMotorPositions(req, res, next) {
 }
 
 function readMotorPosition(req, res, next) {
-    db.oneOrNone('SELECT * FROM MotorPosition WHERE motorID=${motorID} AND userID=${userID}', req.params)
+    db.oneOrNone('SELECT * FROM MotorPosition WHERE motorID=${motorID} AND userID=${userID} AND presetID=${presetID}', req.params)
         .then(data => {
             returnDataOr404(res, data);
         })
@@ -214,17 +214,18 @@ function updateMotorPosition(req, res, next) {
     const queryParams = {
         angle: req.body.angle,
         motorID: req.params.motorID,
-        userID: req.params.userID
+        userID: req.params.userID,
+        presetID: req.params.presetID
     };
 
-    db.oneOrNone('UPDATE MotorPosition SET angle=${angle} WHERE motorID=${motorID} AND userID=${userID} RETURNING id', queryParams)
+    db.oneOrNone('UPDATE MotorPosition SET angle=${angle} WHERE motorID=${motorID} AND userID=${userID} AND presetID=${presetID} RETURNING id', queryParams)
         .then(data => returnDataOr404(res, data))
         .catch(err => next(err));
 }
 
 
 function createMotorPosition(req, res, next) {
-    db.one('INSERT INTO MotorPosition(angle, motorID, userID) VALUES (${angle}, ${motorID}, ${userID}) RETURNING id', req.body)
+    db.one('INSERT INTO MotorPosition(angle, motorID, userID, presetID) VALUES (${angle}, ${motorID}, ${userID}, ${presetID}) RETURNING id', req.body)
         .then(data => {
             res.send(data);
         })
@@ -234,7 +235,7 @@ function createMotorPosition(req, res, next) {
 }
 
 function deleteMotorPosition(req, res, next) {
-    db.oneOrNone('DELETE FROM MotorPosition WHERE motorID=${motorID} AND userID=${userID} RETURNING id', req.params)
+    db.oneOrNone('DELETE FROM MotorPosition WHERE motorID=${motorID} AND userID=${userID} AND presetID=${presetID} RETURNING id', req.params)
         .then(data => {
             returnDataOr404(res, data);
         })
