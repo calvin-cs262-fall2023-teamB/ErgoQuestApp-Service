@@ -56,10 +56,10 @@ router.post('/motors', createMotor);
 router.delete('/motors/:id', deleteMotor);
 
 router.get("/motorpositions", readMotorPositions);
-router.get("/motorpositions/:motorID/:userID", readMotorPosition);
+router.get("/motorpositions/:motorID/:userID/:presetID", readMotorPosition);
 router.put("/motorpositions/:motorID/:userID/:presetID", updateMotorPosition);
 router.post('/motorpositions', createMotorPosition);
-router.delete('/motorpositions/:motorID/:userID', deleteMotorPosition);
+router.delete('/motorpositions/:motorID/:userID/:presetID', deleteMotorPosition);
 
 router.get("/presets", readPresets);
 router.get("/presets/:id", readPreset);
